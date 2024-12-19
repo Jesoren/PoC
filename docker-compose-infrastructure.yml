@@ -1,0 +1,58 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # AMQP port for communication
+      - "15672:15672" # RabbitMQ Management UI
+      - "5552:5552" # Tilføj denne linje
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_HOSTNAME: rabbitmq 
+      RABBITMQ_PORT: 5552
+    networks:
+      - app-network
+    command: ["sh", "-c", "rabbitmq-plugins enable rabbitmq_stream rabbitmq_stream_management && rabbitmq-server"]
+
+  vault_dev:
+    image: hashicorp/vault:latest
+    container_name: vault_dev
+    restart: on-failure:10
+    ports:
+      - "8201:8201"
+    environment:
+      VAULT_ADDR: 'https://0.0.0.0:8201'
+      VAULT_LOCAL_CONFIG:
+        '{"listener": [{"tcp":{"address": "0.0.0.0:8201",
+        "tls_disable": "1", "tls_cert_file":"/data/cert.pem",
+        "tls_key_file":"/data/key.pem"}}],
+        "default_lease_ttl": "168h", "max_lease_ttl": "720h"},
+        "ui": true}'
+      VAULT_DEV_ROOT_TOKEN_ID: '00000000-0000-0000-0000-000000000000'
+      VAULT_TOKEN: '00000000-0000-0000-0000-000000000000'
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./vault-volume:/data
+    healthcheck:
+      retries: 5
+    command: 'server -dev -dev-root-token-id="00000000-0000-0000-0000-000000000000"'
+    networks:
+      - app-network
+
+  vault-init:
+    image: hashicorp/vault:latest
+    command: sh "/app/vault_init.sh"
+    depends_on:
+      - vault_dev
+    healthcheck:
+      retries: 5
+    volumes:
+      - ./vault-init/vault_init.sh:/app/vault_init.sh
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

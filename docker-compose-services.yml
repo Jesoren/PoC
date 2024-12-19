@@ -1,0 +1,154 @@
+services:
+  catalogservice:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
+      dockerfile: Dockerfile
+    ports:
+      - "5139:8080" # CatalogService is exposed on host port 5140
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+      RabbitMQ__HostName: rabbitmq
+    networks:
+      - app-network
+    depends_on:
+      - userservice
+
+  catalogservice1:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
+      dockerfile: Dockerfile
+    ports:
+      - "5140:8080" # CatalogService is exposed on host port 5140
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+      RabbitMQ__HostName: rabbitmq
+    networks:
+      - app-network
+    depends_on:
+      - userservice
+
+  catalogservice2:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
+      dockerfile: Dockerfile
+    ports:
+      - "5141:8080" # CatalogService is exposed on host port 5140
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+      RabbitMQ__HostName: rabbitmq
+    networks:
+      - app-network
+    depends_on:
+      - userservice
+
+  userservice:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/UserService/UserServiceAPI # Path to UserService Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "5410:8080" # UserService is exposed on host port 5410
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+      MongoDbSettings__DatabaseName: Auktionshuset
+      MongoDbSettings__UsersCollection: UsersCollection
+    networks:
+      - app-network
+
+  userservice1:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/UserService/UserServiceAPI
+      dockerfile: Dockerfile
+    ports:
+      - "5411:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+    networks:
+      - app-network
+
+  authservice:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/AuthService/AuthServiceAPI # Path to UserService Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "5200:8080" # UserService is exposed on host port 5200
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+      UserServiceEndPoint: http://userservice:8080/user/GetByUsername/
+    networks:
+      - app-network
+    depends_on:
+      - userservice
+
+  authservice1:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/AuthService/AuthServiceAPI
+      dockerfile: Dockerfile
+    ports:
+      - "5201:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
+      VaultEndPoint: http://vault_dev:8201
+      UserServiceEndPoint: http://userservice:8080/users/GetByUsername/
+    networks:
+      - app-network
+    depends_on:
+      - userservice
+
+  biddingservice:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/BiddingService/BiddingServiceAPI # Path to RabbitMQSender app
+      dockerfile: Dockerfile
+    ports:
+     - "5180:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      RabbitMQ__HostName: rabbitmq
+    networks:
+      - app-network
+
+  biddingservice1:
+    build:
+      context: C:/Users/soren/Desktop/Auktionshus/BiddingService/BiddingServiceAPI
+      dockerfile: Dockerfile
+    ports:
+     - "5181:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      RabbitMQ__HostName: rabbitmq
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "4000:4000"
+    depends_on:
+      - catalogservice
+      - catalogservice1
+      - catalogservice2
+      - userservice
+      - userservice1
+      - authservice
+      - authservice1
+      - biddingservice
+      - biddingservice1
+    networks:
+      - app-network
+
+networks:
+  app-network:
