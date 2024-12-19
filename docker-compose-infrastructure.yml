@@ -12,7 +12,7 @@ services:
       RABBITMQ_HOSTNAME: rabbitmq 
       RABBITMQ_PORT: 5552
     networks:
-      - app-network
+      - apps-network
     command: ["sh", "-c", "rabbitmq-plugins enable rabbitmq_stream rabbitmq_stream_management && rabbitmq-server"]
 
   vault_dev:
@@ -39,7 +39,7 @@ services:
       retries: 5
     command: 'server -dev -dev-root-token-id="00000000-0000-0000-0000-000000000000"'
     networks:
-      - app-network
+      - apps-network
 
   vault-init:
     image: hashicorp/vault:latest
@@ -51,8 +51,7 @@ services:
     volumes:
       - ./vault-init/vault_init.sh:/app/vault_init.sh
     networks:
-      - app-network
+      - apps-network
 
 networks:
-  app-network:
-    external: false
+  apps-network:

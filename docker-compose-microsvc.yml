@@ -9,7 +9,7 @@ services:
       VaultEndPoint: http://vault_dev:8201
       RabbitMQ__HostName: rabbitmq
     networks:
-      - app-network
+      - apps-network
     depends_on:
       - userservice
 
@@ -23,7 +23,7 @@ services:
       VaultEndPoint: http://vault_dev:8201
       RabbitMQ__HostName: rabbitmq
     networks:
-      - app-network
+      - apps-network
     depends_on:
       - userservice
 
@@ -37,7 +37,7 @@ services:
       VaultEndPoint: http://vault_dev:8201
       RabbitMQ__HostName: rabbitmq
     networks:
-      - app-network
+      - apps-network
     depends_on:
       - userservice
 
@@ -52,7 +52,7 @@ services:
       MongoDbSettings__DatabaseName: Auktionshuset
       MongoDbSettings__UsersCollection: UsersCollection
     networks:
-      - app-network
+      - apps-network
 
   userservice1:
     image: sorenmeyer/userservice:latest
@@ -63,7 +63,7 @@ services:
       VAULT_TOKEN: 00000000-0000-0000-0000-000000000000
       VaultEndPoint: http://vault_dev:8201
     networks:
-      - app-network
+      - apps-network
 
   authservice:
     image: sorenmeyer/authservice:latest
@@ -75,7 +75,7 @@ services:
       VaultEndPoint: http://vault_dev:8201
       UserServiceEndPoint: http://userservice:8080/user/GetByUsername/
     networks:
-      - app-network
+      - apps-network
     depends_on:
       - userservice
 
@@ -89,7 +89,7 @@ services:
       VaultEndPoint: http://vault_dev:8201
       UserServiceEndPoint: http://userservice:8080/users/GetByUsername/
     networks:
-      - app-network
+      - apps-network
     depends_on:
       - userservice
 
@@ -101,7 +101,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       RabbitMQ__HostName: rabbitmq
     networks:
-      - app-network
+      - apps-network
 
   biddingservice1:
     image: sorenmeyer/biddingservice:latest
@@ -111,7 +111,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       RabbitMQ__HostName: rabbitmq
     networks:
-      - app-network
+      - apps-network
 
   nginx:
     image: nginx:latest
@@ -130,8 +130,7 @@ services:
       - biddingservice
       - biddingservice1
     networks:
-      - app-network
+      - apps-network
 
 networks:
-  app-network:
-    external: true
+  apps-network:
