@@ -1,7 +1,7 @@
 services:
   catalogservice:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
+      context: /home/Jesoren/poc/CatalogService/CatalogServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5139:8080" # CatalogService is exposed on host port 5140
@@ -18,7 +18,7 @@ services:
 
   catalogservice1:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
+      context: /home/Jesoren/poc/CatalogService/CatalogServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5140:8080" # CatalogService is exposed on host port 5140
@@ -35,7 +35,7 @@ services:
 
   catalogservice2:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
+      context: /home/Jesoren/poc/CatalogService/CatalogServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5141:8080" # CatalogService is exposed on host port 5140
@@ -52,7 +52,7 @@ services:
 
   userservice:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/UserService/UserServiceAPI # Path to UserService Dockerfile
+      context: /home/Jesoren/poc/UserService/UserServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5410:8080" # UserService is exposed on host port 5410
@@ -67,7 +67,7 @@ services:
 
   userservice1:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/UserService/UserServiceAPI
+      context: /home/Jesoren/poc/UserService/UserServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5411:8080"
@@ -80,7 +80,7 @@ services:
 
   authservice:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/AuthService/AuthServiceAPI # Path to UserService Dockerfile
+      context: /home/Jesoren/poc/AuthService/AuthServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5200:8080" # UserService is exposed on host port 5200
@@ -98,7 +98,7 @@ services:
 
   authservice1:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/AuthService/AuthServiceAPI
+      context: /home/Jesoren/poc/AuthService/AuthServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5201:8080"
@@ -128,7 +128,7 @@ services:
 
   biddingservice1:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/BiddingService/BiddingServiceAPI
+      context: /home/Jesoren/poc/BiddingService/BiddingServiceAPI
       dockerfile: Dockerfile
     depends_on:
       - rabbitmq
