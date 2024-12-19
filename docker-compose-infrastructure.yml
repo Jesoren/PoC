@@ -55,4 +55,4 @@ services:
 
 networks:
   app-network:
-    external: true
+    external: false

@@ -1,8 +1,6 @@
 services:
   catalogservice:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
-      dockerfile: Dockerfile
+    image: sorenmeyer/catalogservice:latest
     ports:
       - "5139:8080" # CatalogService is exposed on host port 5140
     environment:
@@ -16,9 +14,7 @@ services:
       - userservice
 
   catalogservice1:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
-      dockerfile: Dockerfile
+    image: sorenmeyer/catalogservice:latest
     ports:
       - "5140:8080" # CatalogService is exposed on host port 5140
     environment:
@@ -32,9 +28,7 @@ services:
       - userservice
 
   catalogservice2:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/CatalogService/CatalogServiceAPI
-      dockerfile: Dockerfile
+    image: sorenmeyer/catalogservice:latest
     ports:
       - "5141:8080" # CatalogService is exposed on host port 5140
     environment:
@@ -48,9 +42,7 @@ services:
       - userservice
 
   userservice:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/UserService/UserServiceAPI # Path to UserService Dockerfile
-      dockerfile: Dockerfile
+    image: sorenmeyer/userservice:latest
     ports:
       - "5410:8080" # UserService is exposed on host port 5410
     environment:
@@ -63,9 +55,7 @@ services:
       - app-network
 
   userservice1:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/UserService/UserServiceAPI
-      dockerfile: Dockerfile
+    image: sorenmeyer/userservice:latest
     ports:
       - "5411:8080"
     environment:
@@ -76,9 +66,7 @@ services:
       - app-network
 
   authservice:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/AuthService/AuthServiceAPI # Path to UserService Dockerfile
-      dockerfile: Dockerfile
+    image: sorenmeyer/authservice:latest
     ports:
       - "5200:8080" # UserService is exposed on host port 5200
     environment:
@@ -92,9 +80,7 @@ services:
       - userservice
 
   authservice1:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/AuthService/AuthServiceAPI
-      dockerfile: Dockerfile
+    image: sorenmeyer/authservice:latest
     ports:
       - "5201:8080"
     environment:
@@ -108,9 +94,7 @@ services:
       - userservice
 
   biddingservice:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/BiddingService/BiddingServiceAPI # Path to RabbitMQSender app
-      dockerfile: Dockerfile
+    image: sorenmeyer/biddingservice:latest
     ports:
      - "5180:8080"
     environment:
@@ -120,9 +104,7 @@ services:
       - app-network
 
   biddingservice1:
-    build:
-      context: C:/Users/soren/Desktop/Auktionshus/BiddingService/BiddingServiceAPI
-      dockerfile: Dockerfile
+    image: sorenmeyer/biddingservice:latest
     ports:
      - "5181:8080"
     environment:
@@ -152,3 +134,4 @@ services:
 
 networks:
   app-network:
+    external: true
