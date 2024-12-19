@@ -1,7 +1,7 @@
 services:
   catalogservice:
     build:
-      context: /home/Jesoren/poc/CatalogService/CatalogServiceAPI
+      context: ./CatalogService/CatalogServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5139:8080" # CatalogService is exposed on host port 5140
@@ -18,7 +18,7 @@ services:
 
   catalogservice1:
     build:
-      context: /home/Jesoren/poc/CatalogService/CatalogServiceAPI
+      context: ./CatalogService/CatalogServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5140:8080" # CatalogService is exposed on host port 5140
@@ -35,7 +35,7 @@ services:
 
   catalogservice2:
     build:
-      context: /home/Jesoren/poc/CatalogService/CatalogServiceAPI
+      context: ./CatalogService/CatalogServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5141:8080" # CatalogService is exposed on host port 5140
@@ -52,7 +52,7 @@ services:
 
   userservice:
     build:
-      context: /home/Jesoren/poc/UserService/UserServiceAPI
+      context: ./UserService/UserServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5410:8080" # UserService is exposed on host port 5410
@@ -67,7 +67,7 @@ services:
 
   userservice1:
     build:
-      context: /home/Jesoren/poc/UserService/UserServiceAPI
+      context: ./UserService/UserServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5411:8080"
@@ -80,7 +80,7 @@ services:
 
   authservice:
     build:
-      context: /home/Jesoren/poc/AuthService/AuthServiceAPI
+      context: ./AuthService/AuthServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5200:8080" # UserService is exposed on host port 5200
@@ -98,7 +98,7 @@ services:
 
   authservice1:
     build:
-      context: /home/Jesoren/poc/AuthService/AuthServiceAPI
+      context: ./AuthService/AuthServiceAPI
       dockerfile: Dockerfile
     ports:
       - "5201:8080"
@@ -114,7 +114,7 @@ services:
 
   biddingservice:
     build:
-      context: C:/Users/soren/Desktop/Auktionshus/BiddingService/BiddingServiceAPI # Path to RabbitMQSender app
+      context: ./BiddingService/BiddingServiceAPI # Path to RabbitMQSender app
       dockerfile: Dockerfile
     depends_on:
       - rabbitmq
@@ -128,7 +128,7 @@ services:
 
   biddingservice1:
     build:
-      context: /home/Jesoren/poc/BiddingService/BiddingServiceAPI
+      context: ./BiddingService/BiddingServiceAPI
       dockerfile: Dockerfile
     depends_on:
       - rabbitmq
