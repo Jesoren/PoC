@@ -7,7 +7,7 @@ sleep 10
 # Insert secrets
 vault kv put secret/Hemmeligheder \
 ConnectionString="mongodb+srv://sorenrefsgaard:qwerty135@cluster0.t9p3l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" \
-Issuer="AuthService" \
+Issuer="http://authservice:8080" \
 Secret="2aVpT8wE1O8hCxFy8X7q7N3/1Aw3NH0XrPlF1v8y2+k=" \
 # Loop forever to prevent container from terminating
 while :
